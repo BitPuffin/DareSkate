@@ -1,7 +1,6 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
-
 import it.randomtower.engine.ResourceManager;
 import it.randomtower.engine.entity.Entity;
 import it.randomtower.engine.entity.PhysicsEntity;
@@ -9,6 +8,15 @@ import it.randomtower.engine.entity.PlatformerEntity;
 
 
 public class Skater extends Entity {
+	
+	
+	
+	int TheWorldId = 1;
+	
+	private final int GROUND = 0;
+	private final int JUMP = 1;
+	private final int FALL = 2;
+	private int state;
 	
 	float speed = 0.5f;
 	float velocity;
@@ -32,21 +40,16 @@ public class Skater extends Entity {
 	public void update(GameContainer gc, int delta) {
 		//check if the skater is colliding with the ground
 		x++;
-		if(collide(SOLID, x, y)== null){
-			y += delta * gravity;
-			jumping = false;
-			
+		if(collide(SOLID, x, y)!= null){
+			state = GROUND;
 		}
-		else
-			jumping = true;
 		
-		if(check("ollie") && collide(SOLID, x, y)!= null){
-			velocity = 10;
-			jumping = true;
+		if(check("ollie")){
+			state = JUMP;
 		}
-		if(check("ollie") && jumping == true){
-			y -= delta * velocity;
-			velocity = (velocity/3)*2;
+		
+		if(collide(SOLID, x, y)== null){
+			state = FALL;
 		}
 		
 	}
