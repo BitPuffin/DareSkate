@@ -20,7 +20,7 @@ public class Skater extends Entity {
 	
 	float speed = 0.5f;
 	float velocity;
-	float gravity = 0.3f;
+	float gravity = 0.4f;
 	boolean jumping;
 	
 	/*
@@ -43,14 +43,31 @@ public class Skater extends Entity {
 		if(collide(SOLID, x, y)!= null){
 			state = GROUND;
 		}
-		
-		if(check("ollie")){
-			state = JUMP;
-		}
-		
-		if(collide(SOLID, x, y)== null){
+		else
 			state = FALL;
+		
+		switch(state) {
+        	case FALL:
+                if(collide(SOLID, x, y)!= null){
+                        state = GROUND;
+                }
+                else
+                	y -= velocity;
+                	velocity -= gravity;
+        			
+                break;
+
+        	case GROUND:                    
+                if(check("ollie")){
+                        state = JUMP;
+                }
+                break;
+                
+        	case JUMP:
+        		velocity = 10;
+        		break;
 		}
+		
 		
 	}
 
