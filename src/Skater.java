@@ -31,7 +31,7 @@ public class Skater extends Entity {
 	
 	public void update(GameContainer gc, int delta) {
 		//check if the skater is colliding with the ground
-		
+		x++;
 		if(collide(SOLID, x, y)== null){
 			y += delta * gravity;
 			jumping = false;
@@ -41,10 +41,10 @@ public class Skater extends Entity {
 			jumping = true;
 		
 		if(check("ollie") && collide(SOLID, x, y)!= null){
-			velocity = 1000;
+			velocity = 10;
 			jumping = true;
 		}
-		if(check("ollie") && collide(SOLID, x, y)==null){
+		if(check("ollie") && jumping == true){
 			y -= delta * velocity;
 			velocity = (velocity/3)*2;
 		}
