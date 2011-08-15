@@ -20,7 +20,7 @@ public class Skater extends Entity {
 	
 	float speed = 0.5f;
 	float velocity;
-	float gravity = 0.45f;
+	float gravity = 0.4f;
 	boolean jumping;
 	
 	Image sprite;
@@ -43,9 +43,7 @@ public class Skater extends Entity {
 	
 	public void update(GameContainer gc, int delta) {
 		//check if the skater is colliding with the ground
-		x++;
-		System.out.println(state);
-		
+		x++;	
 		
 		switch(state) {
         	case FALL:
@@ -78,6 +76,10 @@ public class Skater extends Entity {
         		state = FALL;
         		break;
 		}
+		
+			if (collide(SOLID, x+5, y-30)!= null){
+				System.out.println("You lose!");
+			}
 		
 	}
 

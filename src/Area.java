@@ -30,6 +30,12 @@ public class Area extends World {
 			Ground ground = new Ground(i, 450);
 			add(ground);
 		}
+		Ground g = new Ground(500, 350);
+		Ground f = new Ground(600, 350);
+		Ground a = new Ground(400, 350);
+		add(g);
+		add(a);
+		add(f);
 		
 	}
 
