@@ -51,10 +51,10 @@ public class Skater extends Entity {
                 if(collide(SOLID, x, y)!= null){
                         state = GROUND;
                 }
-                else
+                else{
                 	y -= velocity;
                 	velocity -= gravity;
-        			
+                }
                 break;
 
         	case GROUND:                    
@@ -64,7 +64,10 @@ public class Skater extends Entity {
                 break;
                 
         	case JUMP:
+        		y-=10;
         		velocity = 10;
+        		
+        		state = FALL;
         		break;
 		}
 		
