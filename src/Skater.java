@@ -16,7 +16,7 @@ public class Skater extends Entity {
 	private final int GROUND = 0;
 	private final int JUMP = 1;
 	private final int FALL = 2;
-	private int state;
+	private int state = FALL;
 	
 	float speed = 0.5f;
 	float velocity;
@@ -40,11 +40,8 @@ public class Skater extends Entity {
 	public void update(GameContainer gc, int delta) {
 		//check if the skater is colliding with the ground
 		x++;
-		if(collide(SOLID, x, y)!= null){
-			state = GROUND;
-		}
-		else
-			state = FALL;
+		System.out.println(state);
+		
 		
 		switch(state) {
         	case FALL:
@@ -52,6 +49,7 @@ public class Skater extends Entity {
                         state = GROUND;
                 }
                 else{
+                	state = FALL;
                 	y -= velocity;
                 	velocity -= gravity;
                 }
@@ -70,6 +68,7 @@ public class Skater extends Entity {
         		state = FALL;
         		break;
 		}
+		
 		
 		
 	}
