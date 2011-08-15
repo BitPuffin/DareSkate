@@ -6,6 +6,7 @@
 	<!-- songs -->
 	<!-- images -->
 	<image key="skater" file="skater/skater.png" />
+	<image key="skaterjump" file="skater/skaterjump.png" />
 	<image key="ground" file="block/block.png" />
 	<!-- sheets -->
 	<!-- fonts -->

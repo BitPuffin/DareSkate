@@ -23,6 +23,9 @@ public class Skater extends Entity {
 	float gravity = 0.45f;
 	boolean jumping;
 	
+	Image sprite;
+	Image jump;
+	
 	/*
 	 * position += velocity;
 	 * velocity -= gravity;
@@ -31,7 +34,8 @@ public class Skater extends Entity {
 
 	public Skater(float x, float y) {
 		super(x, y);
-		Image sprite = ResourceManager.getImage("skater");
+		sprite = ResourceManager.getImage("skater");
+		jump = ResourceManager.getImage("skaterjump");
 		setGraphic(sprite);
 		setHitBox(10, 10, sprite.getWidth()-20, sprite.getHeight()-10);
 		define("ollie", Input.KEY_UP, Input.KEY_SPACE);
@@ -45,6 +49,7 @@ public class Skater extends Entity {
 		
 		switch(state) {
         	case FALL:
+        		setGraphic(jump);
                 if(collide(SOLID, x, y)!= null){
                         state = GROUND;
                 }
@@ -55,7 +60,8 @@ public class Skater extends Entity {
                 }
                 break;
 
-        	case GROUND:                    
+        	case GROUND:
+        		setGraphic(sprite);
                 if(check("ollie")){
                         state = JUMP;
                 }
@@ -65,6 +71,7 @@ public class Skater extends Entity {
                 break;
                 
         	case JUMP:
+        		setGraphic(jump);
         		y-=10;
         		velocity = 10;
         		
