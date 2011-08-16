@@ -7,6 +7,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+/*
+ * @Author Isak Andersson
+ * This game is totally open source
+ */
 
 public class Main extends StateBasedGame {
 
