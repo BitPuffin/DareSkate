@@ -25,7 +25,7 @@ public class Area extends World {
 		
 		Skater skater = new Skater(150, 300);
 		add(skater);
-		Camera camera = new Camera(skater, container.getWidth(), container.getHeight());
+		setCamera(new Camera(skater, getWidth(), getHeight()));
 		for(int i = 0; i<500; i+=100){
 			Ground ground = new Ground(i, 450);
 			add(ground);
