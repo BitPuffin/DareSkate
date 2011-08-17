@@ -62,6 +62,10 @@ public class Skater extends Entity {
 			break;
 
 		case GROUND:
+			//Make sure that the skater isn't buried in the ground
+			while(collide(SOLID, x, y-2)!=null){
+				y--;
+			}
 			vy = 0;
 			if (check("ollie")) {
 				state = JUMP;
@@ -81,7 +85,7 @@ public class Skater extends Entity {
 			break;
 		}
 
-		if (collide(SOLID, x + 1, y - 30) != null) {
+		if (collide(SOLID, x + 1, y-15) != null) {
 			lost = true;
 		}
 
