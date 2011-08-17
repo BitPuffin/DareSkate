@@ -38,6 +38,7 @@ public class Main extends StateBasedGame {
 			container.setTargetFrameRate(60);
 			//container.setMaximumLogicUpdateInterval(100);
 			//container.setMinimumLogicUpdateInterval(5);
+			container.setIcon("media/icon.png");
 			container.start();
 		} catch (SlickException e) {
 			e.printStackTrace();

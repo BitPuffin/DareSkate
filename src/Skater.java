@@ -45,7 +45,6 @@ public class Skater extends Entity {
 
 		switch (state) {
 		case FALL:
-			setGraphic(jump);
 			if (collide(SOLID, x, y) != null) {
 				state = GROUND;
 				setGraphic(sprite);
@@ -66,6 +65,7 @@ public class Skater extends Entity {
 			vy = 0;
 			if (check("ollie")) {
 				state = JUMP;
+				setGraphic(jump);
 			}
 			if (collide(SOLID, x, y) == null)
 				state = FALL;
@@ -74,7 +74,6 @@ public class Skater extends Entity {
 
 		case JUMP:
 			canhover = true;
-			setGraphic(jump);
 			y -= 10;
 			vy = 0.6f;
 
