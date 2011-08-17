@@ -17,9 +17,10 @@ public class Skater extends Entity {
 
 	float vx = 0.3f;
 	float vy;
-	final float gravity = 0.1f;
+	final float gravity = 0.03f;
 	boolean jumping;
 	boolean lost = false;
+	boolean canhover = false;
 
 	Image sprite;
 	Image jump;
@@ -50,6 +51,12 @@ public class Skater extends Entity {
 				setGraphic(sprite);
 			} else {
 				state = FALL;
+				if(check("ollie") && canhover == true){
+					vy += 0.011;
+				}
+				else{				
+				canhover = false;
+				}
 				y -= (vy * delta);
 				vy -= gravity;
 			}
@@ -66,9 +73,10 @@ public class Skater extends Entity {
 			break;
 
 		case JUMP:
+			canhover = true;
 			setGraphic(jump);
 			y -= 10;
-			vy = 1.5f;
+			vy = 0.6f;
 
 			state = FALL;
 			break;
