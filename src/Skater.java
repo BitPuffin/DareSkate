@@ -85,7 +85,7 @@ public class Skater extends Entity {
 				state = JUMP;
 				setGraphic(jump);
 			}
-			if (collide(SOLID, x, y) == null) {
+			if (collide(SOLID, x+3, y) == null) {
 				state = FALL;
 			}
 			if (collide("railstart", x + 2, y) != null) {
