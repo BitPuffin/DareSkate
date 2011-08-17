@@ -15,7 +15,7 @@ public class Skater extends Entity {
 	private final int FALL = 2;
 	private int state = FALL;
 
-	float vx = 0.3f;
+	float vx = 0.4f;
 	float vy;
 	final float gravity = 0.03f;
 	boolean jumping;

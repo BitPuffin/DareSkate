@@ -20,7 +20,6 @@ public class Area extends World {
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException{
 		super.init(container, game);
-		
 		generateLevel();
 		
 		Skater skater = new Skater(150, 300);
