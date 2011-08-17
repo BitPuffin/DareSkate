@@ -1,6 +1,9 @@
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+
 import it.randomtower.engine.ResourceManager;
 import it.randomtower.engine.entity.Entity;
 import it.randomtower.engine.entity.PhysicsEntity;
@@ -13,14 +16,17 @@ public class Skater extends Entity {
 	private final int GROUND = 0;
 	private final int JUMP = 1;
 	private final int FALL = 2;
+	private final int GRIND = 3;
 	private int state = FALL;
 
 	float vx = 0.4f;
 	float vy;
 	final float gravity = 0.03f;
+	final float grindacc = 0.001f;
 	boolean jumping;
 	boolean lost = false;
 	boolean canhover = false;
+	boolean jumped = false;
 
 	Image sprite;
 	Image jump;
@@ -38,7 +44,7 @@ public class Skater extends Entity {
 		define("ollie", Input.KEY_UP, Input.KEY_SPACE);
 	}
 
-	public void update(GameContainer gc, int delta) {
+	public void update(GameContainer gc, int delta) throws SlickException {
 		// check if the skater is colliding with the ground
 		if (lost == false)
 			x += (vx * delta);
@@ -48,22 +54,30 @@ public class Skater extends Entity {
 			if (collide(SOLID, x, y) != null) {
 				state = GROUND;
 				setGraphic(sprite);
+			} else if (collide("railbody", x, y) != null
+					|| collide("railend", x, y) != null) {
+				state = GRIND;
 			} else {
 				state = FALL;
-				if(check("ollie") && canhover == true){
+				if (check("ollie") && canhover == true) {
 					vy += 0.011;
-				}
-				else{				
-				canhover = false;
+				} else {
+					canhover = false;
 				}
 				y -= (vy * delta);
 				vy -= gravity;
 			}
+			if (collide("railstart", x + 2, y - 40) != null) {
+				lost = true;
+			}
+			if (collide("railstart", x, y + 1) != null) {
+				state = GRIND;
+			}
 			break;
 
 		case GROUND:
-			//Make sure that the skater isn't buried in the ground
-			while(collide(SOLID, x, y-2)!=null){
+			// Make sure that the skater isn't buried in the ground
+			while (collide(SOLID, x, y - 2) != null) {
 				y--;
 			}
 			vy = 0;
@@ -71,24 +85,61 @@ public class Skater extends Entity {
 				state = JUMP;
 				setGraphic(jump);
 			}
-			if (collide(SOLID, x, y) == null)
+			if (collide(SOLID, x, y) == null) {
 				state = FALL;
-
+			}
+			if (collide("railstart", x + 2, y) != null) {
+				lost = true;
+			}
+			if (collide(SOLID, x + 3, y - 10) != null) {
+				lost = true;
+			}
 			break;
 
 		case JUMP:
 			canhover = true;
+			jumped = true;
 			y -= 10;
 			vy = 0.6f;
 
 			state = FALL;
 			break;
+
+		case GRIND:
+			while (collide("raildbody", x, y - 1) != null
+					|| collide("railend", x, y) != null) {
+				y--;
+			}
+			vx += (grindacc * delta);
+
+			if (collide("railbody", x, y) == null
+					|| collide("railend", x, y) == null) {
+				vy = 0;
+				state = FALL;
+			}
+
+			if (check("ollie")) {
+				state = JUMP;
+			}
+
+			break;
 		}
 
-		if (collide(SOLID, x + 1, y-15) != null) {
+		if (collide(SOLID, x + 1, y - 15) != null) {
 			lost = true;
 		}
 
+	}
+
+	@Override
+	public void render(GameContainer gc, Graphics g) throws SlickException {
+		super.render(gc, g);
+		if(jumped == false){
+		g.drawString("Space or up to jump", x - 200, y - 100);
+		}
+		if (lost) {
+			g.drawString("You Lose!", x, y - 200);
+		}
 	}
 
 }
