@@ -26,14 +26,15 @@ public class Area extends World {
 		Skater skater = new Skater(150, 300);
 		add(skater);
 		setCamera(new Camera(skater, getWidth(), getHeight()));
-		for(int i = 0; i<500; i+=100){
+		for(int i = 0; i<600; i+=100){
 			Ground ground = new Ground(i, 450);
 			add(ground);
 		}
-		Ground g = new Ground(500, 350);
-		Ground f = new Ground(600, 350);
-		add(g);
-		add(f);
+		for(int i = 500; i<2000; i+=100){
+			Ground ground = new Ground(i, 350);
+			add(ground);
+		}
+		
 		
 	}
 

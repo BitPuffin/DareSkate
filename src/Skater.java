@@ -55,6 +55,14 @@ public class Skater extends Entity {
                 }
                 else{
                 	state = FALL;
+                	if(check("ollie")){
+                		gravity = 0.4f;
+                	}
+                	else{
+                		if(gravity <= 0.8){
+                			gravity+= 0.01;
+                		}
+                	}
                 	y -= velocity;
                 	velocity -= gravity;
                 }
@@ -62,6 +70,7 @@ public class Skater extends Entity {
 
         	case GROUND:
         		setGraphic(sprite);
+        		gravity=0;
                 if(check("ollie")){
                         state = JUMP;
                 }
