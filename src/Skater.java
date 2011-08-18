@@ -20,14 +20,17 @@ public class Skater extends Entity {
 	private int state = FALL;
 
 	float vx = 0.4f;
+	float maxspeed = 0.84f;
 	float vy;
 	final float gravity = 0.03f;
 	final float grindacc = 0.001f;
+	float startx;
+	float starty;
 	boolean jumping;
 	boolean lost = false;
 	boolean canhover = false;
 	boolean jumped = false;
-
+	boolean canrestart = false;
 	Image sprite;
 	Image jump;
 
@@ -37,11 +40,14 @@ public class Skater extends Entity {
 
 	public Skater(float x, float y) {
 		super(x, y);
+		startx = x;
+		starty = y;
 		sprite = ResourceManager.getImage("skater");
 		jump = ResourceManager.getImage("skaterjump");
 		setGraphic(sprite);
 		setHitBox(10, 10, sprite.getWidth() - 20, sprite.getHeight() - 10);
 		define("ollie", Input.KEY_UP, Input.KEY_SPACE);
+		define("restart", Input.KEY_ENTER);
 	}
 
 	public void update(GameContainer gc, int delta) throws SlickException {
@@ -54,6 +60,7 @@ public class Skater extends Entity {
 			if (collide(SOLID, x, y) != null) {
 				state = GROUND;
 				setGraphic(sprite);
+				canrestart = true;
 			} else if (collide("railbody", x, y) != null
 					|| collide("railend", x, y) != null) {
 				state = GRIND;
@@ -67,7 +74,7 @@ public class Skater extends Entity {
 				y -= (vy * delta);
 				vy -= gravity;
 			}
-			if (collide("railstart", x + 2, y - 40) != null) {
+			if (collide("railstart", x + 2, y - 10) != null) {
 				lost = true;
 			}
 			if (collide("railstart", x, y + 1) != null) {
@@ -91,7 +98,7 @@ public class Skater extends Entity {
 			if (collide("railstart", x + 2, y) != null) {
 				lost = true;
 			}
-			if (collide(SOLID, x + 3, y - 10) != null) {
+			if (collide(SOLID, x + 5, y - 10) != null) {
 				lost = true;
 			}
 			break;
@@ -110,7 +117,9 @@ public class Skater extends Entity {
 					|| collide("railend", x, y) != null) {
 				y--;
 			}
+			if(vx <= maxspeed){
 			vx += (grindacc * delta);
+			}
 
 			if (collide("railbody", x, y) == null
 					|| collide("railend", x, y) == null) {
@@ -128,6 +137,16 @@ public class Skater extends Entity {
 		if (collide(SOLID, x + 1, y - 15) != null) {
 			lost = true;
 		}
+		
+		if(check("restart")){
+			if (canrestart){
+			x = startx-50;
+			y = starty-50;
+			vx = 0.4f;
+			lost = false;
+			canrestart = false;
+			}
+		}
 
 	}
 
@@ -138,7 +157,7 @@ public class Skater extends Entity {
 		g.drawString("Space or up to jump", x - 200, y - 100);
 		}
 		if (lost) {
-			g.drawString("You Lose!", x, y - 200);
+			g.drawString("You Lose!, press enter to restart!", x, y - 200);
 		}
 	}
 

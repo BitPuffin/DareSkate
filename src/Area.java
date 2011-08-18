@@ -16,6 +16,7 @@ public class Area extends World {
 	public Area(int id, GameContainer container) {
 		super(id, container);
 		
+		
 	}
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException{
