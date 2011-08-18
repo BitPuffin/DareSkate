@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="DareSkate" default="Engine" basedir="bin"><!-- This where to be export to the local dir --> 
+<description>Ant targets for Engine into jar</description>
+
+<target name="Engine" description="Make the engine">
+   <!-- Export File for jar --> 
+   <jar jarfile="DareSkate.jar" basedir=".">
+       <manifest>
+         <attribute name="Class-Path" value="lwjgl.jar lwjgl_test.jar lwjgl_util.jar marteEngine.jar slick.jar"/>
+         <!-- Main Class to Run Program -->
+         <attribute name="Main-Class" value="Main"/>
+       </manifest>
+    </jar>
+</target> 
+</project>
