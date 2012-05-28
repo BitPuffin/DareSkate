@@ -21,9 +21,8 @@ public class TheWorld  {
 	Area area;
 	
 
-	public TheWorld(int id, GameContainer container) {
-		area = new Area(id, container);
-		
+	public TheWorld( int id, GameContainer container ) {
+		area = new Area( id, container );
 	}
 
 }

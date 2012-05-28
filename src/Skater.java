@@ -38,67 +38,69 @@ public class Skater extends Entity {
 	 * position += velocity; velocity -= gravity; velocity += input;
 	 */
 
-	public Skater(float x, float y) {
-		super(x, y);
+	public Skater( float x, float y ) {
+		super( x, y );
 		startx = x;
 		starty = y;
-		sprite = ResourceManager.getImage("skater");
-		jump = ResourceManager.getImage("skaterjump");
-		setGraphic(sprite);
-		setHitBox(10, 10, sprite.getWidth() - 20, sprite.getHeight() - 10);
-		define("ollie", Input.KEY_UP, Input.KEY_SPACE);
-		define("restart", Input.KEY_ENTER);
+		sprite = ResourceManager.getImage( "skater" );
+		jump = ResourceManager.getImage( "skaterjump.png ");
+		setGraphic( sprite );
+		setHitBox( 10, 10, sprite.getWidth() - 20, sprite.getHeight() - 10 );
+		define( "ollie", Input.KEY_UP, Input.KEY_SPACE );
+		define( "restart", Input.KEY_ENTER );
 	}
 
-	public void update(GameContainer gc, int delta) throws SlickException {
+	public
+	void update( GameContainer gc, int delta ) throws SlickException {
 		// check if the skater is colliding with the ground
-		if (lost == false)
-			x += (vx * delta);
+		if ( lost == false )
+			x += ( vx * delta );
 
-		switch (state) {
+		switch ( state ) {
 		case FALL:
-			if (collide(SOLID, x, y) != null) {
+			if ( collide(SOLID, x, y) != null ) {
 				state = GROUND;
-				setGraphic(sprite);
+				setGraphic( sprite );
 				canrestart = true;
-			} else if (collide("railbody", x, y) != null
-					|| collide("railend", x, y) != null) {
+			} else if ( collide("railbody", x, y ) != null
+					|| collide( "railend", x, y ) != null) {
 				state = GRIND;
 			} else {
 				state = FALL;
-				if (check("ollie") && canhover == true) {
+				if ( check("ollie") && canhover == true ) {
 					vy += 0.011;
 				} else {
 					canhover = false;
 				}
-				y -= (vy * delta);
+				y -= ( vy * delta );
 				vy -= gravity;
 			}
-			if (collide("railstart", x + 2, y - 10) != null) {
+			if ( collide( "railstart", x + 2, y - 10 ) != null ) {
 				lost = true;
 			}
-			if (collide("railstart", x, y + 1) != null) {
+			if ( collide( "railstart", x, y + 1 ) != null ) {
 				state = GRIND;
 			}
 			break;
 
 		case GROUND:
 			// Make sure that the skater isn't buried in the ground
-			while (collide(SOLID, x, y - 2) != null) {
+			while ( collide( SOLID, x, y - 2 ) != null ) {
 				y--;
 			}
+			
 			vy = 0;
-			if (check("ollie")) {
+			if ( check( "ollie" ) ) {
 				state = JUMP;
-				setGraphic(jump);
+				setGraphic( jump );
 			}
-			if (collide(SOLID, x+3, y) == null) {
+			if ( collide( SOLID, x+3, y ) == null ) {
 				state = FALL;
 			}
-			if (collide("railstart", x + 2, y) != null) {
+			if ( collide( "railstart", x + 2, y ) != null ) {
 				lost = true;
 			}
-			if (collide(SOLID, x + 5, y - 10) != null) {
+			if ( collide( SOLID, x + 5, y - 10 ) != null ) {
 				lost = true;
 			}
 			break;
@@ -113,33 +115,33 @@ public class Skater extends Entity {
 			break;
 
 		case GRIND:
-			while (collide("raildbody", x, y - 1) != null
-					|| collide("railend", x, y) != null) {
+			while ( collide( "raildbody", x, y - 1 ) != null
+					|| collide( "railend", x, y ) != null ) {
 				y--;
 			}
-			if(vx <= maxspeed){
-			vx += (grindacc * delta);
+			if( vx <= maxspeed ){
+			vx += ( grindacc * delta );
 			}
 
-			if (collide("railbody", x, y) == null
-					|| collide("railend", x, y) == null) {
+			if ( collide( "railbody", x, y ) == null
+					|| collide( "railend", x, y ) == null ) {
 				vy = 0;
 				state = FALL;
 			}
 
-			if (check("ollie")) {
+			if ( check( "ollie" ) ) {
 				state = JUMP;
 			}
 
 			break;
 		}
 
-		if (collide(SOLID, x + 1, y - 15) != null) {
+		if ( collide( SOLID, x + 1, y - 15 ) != null ) {
 			lost = true;
 		}
 		
-		if(check("restart")){
-			if (canrestart){
+		if( check( "restart" ) ){
+			if ( canrestart ){
 			x = startx-50;
 			y = starty-50;
 			vx = 0.4f;
@@ -151,13 +153,14 @@ public class Skater extends Entity {
 	}
 
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException {
-		super.render(gc, g);
-		if(jumped == false){
-		g.drawString("Space or up to jump", x - 200, y - 100);
+	public
+	void render( GameContainer gc, Graphics g ) throws SlickException {
+		super.render( gc, g );
+		if( jumped == false ){
+		g.drawString( "Space or up to jump", x - 200, y - 100 );
 		}
-		if (lost) {
-			g.drawString("You Lose!, press enter to restart!", x, y - 200);
+		if ( lost ) {
+			g.drawString( "You Lose!, press enter to restart!", x, y - 200 );
 		}
 	}
 
