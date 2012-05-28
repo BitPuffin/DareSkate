@@ -38,12 +38,13 @@ public class Skater extends Entity {
 	 * position += velocity; velocity -= gravity; velocity += input;
 	 */
 
-	public Skater( float x, float y ) {
+	public Skater( float x, float y ) throws SlickException {
 		super( x, y );
 		startx = x;
 		starty = y;
 		sprite = ResourceManager.getImage( "skater" );
-		jump = ResourceManager.getImage( "skaterjump.png ");
+		// jump = ResourceManager.getImage( "skaterjump.png "); This fails for some reason
+		jump = new Image("media/skater/skaterjump.png");
 		setGraphic( sprite );
 		setHitBox( 10, 10, sprite.getWidth() - 20, sprite.getHeight() - 10 );
 		define( "ollie", Input.KEY_UP, Input.KEY_SPACE );
@@ -92,6 +93,8 @@ public class Skater extends Entity {
 			vy = 0;
 			if ( check( "ollie" ) ) {
 				state = JUMP;
+				
+				//Fails to find jump..
 				setGraphic( jump );
 			}
 			if ( collide( SOLID, x+3, y ) == null ) {
