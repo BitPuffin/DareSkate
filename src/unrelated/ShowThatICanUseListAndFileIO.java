@@ -65,7 +65,7 @@ public class ShowThatICanUseListAndFileIO {
 	private
 	void printIntegerListToTheFile( ArrayList< Integer > list ) {
 		
-		String text = "Our text file!";
+		String text = "Random Numbers";
 		writer.println(text);
 		
 		for( int i=0; i<text.length(); i++ ) {
