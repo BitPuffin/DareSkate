@@ -10,6 +10,22 @@ import it.randomtower.engine.entity.PhysicsEntity;
 import it.randomtower.engine.entity.PlatformerEntity;
 
 public class Skater extends Entity {
+	
+	/*
+	 * 
+	 * 
+	 * 
+	 * 		TODO!!!!!!!!!!
+	 * 
+	 * 
+	 *		CLEAN THIS
+	 *		CODE UP!!! 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 
 	int TheWorldId = 1;
 
