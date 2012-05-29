@@ -47,6 +47,7 @@ public class Skater extends Entity {
 	boolean canhover = false;
 	boolean jumped = false;
 	boolean canrestart = false;
+	boolean win = false;
 	Image sprite;
 	Image jump;
 
@@ -166,7 +167,14 @@ public class Skater extends Entity {
 			vx = 0.4f;
 			lost = false;
 			canrestart = false;
+			win = false;
 			}
+		}
+		
+		if( x >= 4900 ) {
+			win = true;
+			vx = 0;
+			lost = false;
 		}
 
 	}
@@ -179,7 +187,10 @@ public class Skater extends Entity {
 		g.drawString( "Space or up to jump", x - 200, y - 100 );
 		}
 		if ( lost ) {
-			g.drawString( "You Lose!, press enter to restart!", x, y - 200 );
+			g.drawString( "You Lose!, press enter to restart!", x-300, y - 200 );
+		}
+		if ( win ) {
+			g.drawString( "You WIIIIIN!!!!, press enter to restart!", x-300, y - 200 );
 		}
 	}
 

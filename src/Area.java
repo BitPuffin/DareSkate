@@ -35,15 +35,35 @@ public class Area extends World {
 			Ground ground = new Ground( i, 350 );
 			add( ground );
 		}
+		for( int i = 2400; i <= 5000; i+=100 ) {
+			Ground ground = new Ground( i, 450 );
+			add( ground );
+		}
+		for( int i = 250; i <=350; i+=100 ) {
+			Ground ground = new Ground( 3000, i );
+			add( ground );
+		}
 		
-		RailStart railstart = new RailStart( 1600, 250 );
-		RailBody railbody = new RailBody( 1700, 250 );
-		RailEnd railend = new RailEnd( 1800, 250 );
+		addRail( 1600, 250, 1 );
+		addRail( 3200, 350, 3);
+		
+		for( int i = -1050; i <=350; i+=100 ) {
+			Ground ground = new Ground( 5000, i );
+			add( ground );
+		}
+				
+	}
+	
+	private void addRail( int startx, int y, int middles ) {
+		RailStart railstart = new RailStart( startx, y );
 		add( railstart );
-		add( railbody );
+		for ( int i = startx+100; i <= startx + 100 * middles; i += 100 ) {
+			RailBody railbody = new RailBody( i, y );
+			add( railbody );
+		}
+		
+		RailEnd railend = new RailEnd( startx + 100*middles + 100, y );
 		add( railend );
-		
-		
 	}
 
 	private

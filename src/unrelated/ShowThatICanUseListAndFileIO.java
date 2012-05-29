@@ -43,7 +43,7 @@ public class ShowThatICanUseListAndFileIO {
 	
 	public
 	void start() {
-		randomNums = addRandomNumbersToAnIntegerList( randomNums, 200 );
+		randomNums = addRandomNumbersToAnIntegerList( randomNums, 10 );
 		Collections.sort( randomNums );
 		printIntegerListToTheFile( randomNums );
 		readNumbersIntoTheLinkedList();
@@ -56,7 +56,7 @@ public class ShowThatICanUseListAndFileIO {
 		Random rand = new Random();
 		
 		for ( int i = 0; i < howmany; i++ ) {
-			list.add( i, rand.nextInt( 2000 ) );
+			list.add( i, rand.nextInt( 20 ) + 1325 );
 		}
 		
 		return list;
@@ -64,6 +64,15 @@ public class ShowThatICanUseListAndFileIO {
 	
 	private
 	void printIntegerListToTheFile( ArrayList< Integer > list ) {
+		
+		String text = "Our text file!";
+		writer.println(text);
+		
+		for( int i=0; i<text.length(); i++ ) {
+			writer.print("=");
+		}
+		writer.println();
+		writer.println();
 		
 		for( int i = 0; i < list.size(); i++) {
 			writer.println( "* " + list.get( i ) );	// Markdown syntax!!
@@ -78,15 +87,16 @@ public class ShowThatICanUseListAndFileIO {
 		mrScanner.reset();	// Reset the scanner in case it has read before
 		readList.clear();	// Clear the list so it's empty
 		
-		while( mrScanner.hasNext() ) {
-			System.out.println( mrScanner.nextLine() );
-		}
-		
 		mrScanner.reset();
 		
 		//	TODO ASK KARL WHY THIS SHIT DOESN'T WORK
 		while( mrScanner.hasNext() ) {
-			readList.add( mrScanner.nextInt() );	// Hurray!
+			if ( mrScanner.hasNextInt() ){
+				readList.add( mrScanner.nextInt() );	// Hurray!
+			}
+			else {
+				mrScanner.next();
+			}
 		}
 		
 		// DEBUG Print list
@@ -100,18 +110,21 @@ public class ShowThatICanUseListAndFileIO {
 	void lookFor1337() {
 		boolean found = false;	// For readability
 		int index = -1;
-		for( int i = 0; i < readList.size(); i++ ) {	// Linear search because it's a linked list
-			if ( readList.get(i) == 1337 ) {
-				index = i;
-				found = true;
-			}
-		}
+//		for( int i = 0; i < readList.size(); i++ ) {	// Linear search because it's a linked list
+//			if ( readList.get(i) == 1337 ) {
+//				index = i;
+//				found = true;
+//			}
+//		}
+		
+		index = Collections.binarySearch( readList, 1337 );
+		found = index > 0;
 		
 		if ( !found ) {
 			JOptionPane.showMessageDialog( null, "Fuck this shit, 1337 wasn't generated" );
 		}
 		else {
-			JOptionPane.showMessageDialog( null, "Fuck yes, 1337 found at index #" + index );
+			JOptionPane.showMessageDialog( null, "Fuck yes, an instance of 1337 found at index #" + index +" possibly at other indices as well but that's unlikely");
 		}
 	}
 	
